@@ -1,0 +1,46 @@
+version: "2.0"
+services:
+  # 第1个容器
+  jd1:
+    image: ohmypatrick/jd-base:v3
+    container_name: jd1
+    restart: always
+    tty: true
+    network_mode: "bridge"
+    hostname: jd1
+    volumes:
+      - ./jd1/config:/jd/config
+      - ./jd1/log:/jd/log
+      - ./jd1/scripts:/jd/scripts
+    ports:
+      - 5678:5678
+
+  # 第2个容器
+  jd2:
+    image: ohmypatrick/jd-base:v3
+    container_name: jd2
+    restart: always
+    tty: true
+    network_mode: "bridge"
+    hostname: jd2
+    volumes:
+      - ./jd2/config:/jd/config
+      - ./jd2/log:/jd/log
+      - ./jd1/scripts:/jd/scripts
+    ports:
+      - 5679:5678
+
+  # 第3个容器，以此类推
+  jd3:
+    image: ohmypatrick/jd-base:v3
+    container_name: jd3
+    restart: always
+    tty: true
+    network_mode: "bridge"
+    hostname: jd3
+    volumes:
+      - ./jd3/config:/jd/config
+      - ./jd3/log:/jd/log
+      - ./jd1/scripts:/jd/scripts
+    ports:
+      - 5680:5678
